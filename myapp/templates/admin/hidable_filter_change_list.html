@@ -1,0 +1,85 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+{% block extrahead %}
+{{ block.super }}
+<style>
+    .filter-toggle {
+        background: #417690;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    
+    .filter-toggle:hover {
+        background: #205067;
+    }
+    
+    .filter-container {
+        transition: all 0.3s ease;
+    }
+    
+    .filter-container.hidden {
+        display: none;
+    }
+    
+    @media (min-width: 768px) {
+        .filter-container:not(.hidden) {
+            float: right;
+            width: 250px;
+            margin-left: 20px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <button class="filter-toggle" onclick="toggleFilters()">Toggle Filters</button>
+    
+    <div class="filter-container" id="filterContainer">
+        {% block filters %}
+        {{ block.super }}
+        {% endblock %}
+    </div>
+    
+    <div class="results{% if filter_container_visible %}{% else %} full-width{% endif %}" id="resultsContainer">
+        {% block result_list %}
+        {{ block.super }}
+        {% endblock %}
+    </div>
+</div>
+
+<script>
+    // Check if filters should be visible by default
+    let filterVisible = localStorage.getItem('adminFilterVisible');
+    if (filterVisible === null) {
+        filterVisible = 'true'; // Show by default
+        localStorage.setItem('adminFilterVisible', 'true');
+    }
+    
+    const filterContainer = document.getElementById('filterContainer');
+    const resultsContainer = document.getElementById('resultsContainer');
+    
+    if (filterVisible === 'false') {
+        filterContainer.classList.add('hidden');
+        resultsContainer.classList.add('full-width');
+    }
+    
+    function toggleFilters() {
+        if (filterContainer.classList.contains('hidden')) {
+            filterContainer.classList.remove('hidden');
+            resultsContainer.classList.remove('full-width');
+            localStorage.setItem('adminFilterVisible', 'true');
+        } else {
+            filterContainer.classList.add('hidden');
+            resultsContainer.classList.add('full-width');
+            localStorage.setItem('adminFilterVisible', 'false');
+        }
+    }
+</script>
+{% endblock %}
