@@ -74,8 +74,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # for local development
     "http://127.0.0.1:3000",
     "https://spacenetdockserv.onrender.com",
-    "38.143.19.151",
-    # "https://spacenetserver.up.railway.app",
+    "https://38.143.19.151",
+    "http://38.143.19.151",
     # os.environ.get("FRONTEND_URL", ""),  # add deployed frontend here via env
 ]
 
@@ -84,8 +84,8 @@ load_dotenv()
 
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = [
-    "https://spacenetserver.up.railway.app",
-    "38.143.19.151"
+    "https://38.143.19.151",
+    "http://38.143.19.151"
 ]
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
